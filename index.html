@@ -65,26 +65,22 @@ const M=[
 let picked=null,done=new Set();
 function renderMatch(){
 left.innerHTML=M.map((x,i)=>`<div class="card ${picked===i?'picked':''}" onclick="ml(${i})"><b>Hito:</b> ${x[0]}</div>`).join('');
-const distractors=[
-'Consolidación del sistema feudal y reducción del comercio europeo',
-'Regreso a explicaciones exclusivamente basadas en la tradición',
-'Desaparición de las ciudades como centros de intercambio',
-'Concentración del poder político sin debates sobre representación'
-];
-const all=M.map((x,i)=>({text:x[1],i})).concat(distractors.map(text=>({text,i:-1})));
-const order=[2,7,0,5,8,1,4,9,3,6];
-right.innerHTML=order.map(k=>{const x=all[k];return `<div class="card" onclick="mr(${x.i})"><b>Transformación:</b> ${x.text}</div>`}).join('');
+const order=[3,0,5,2,4,1];
+right.innerHTML=order.map(i=>`<div class="card" onclick="mr(${i})"><b>Transformación:</b> ${M[i][1]}</div>`).join('');
 }
-function ml(i){if(done.has(i)){fb3.textContent='Ese hito ya está resuelto. Elige otro.';return}picked=i;renderMatch();fb3.textContent='Ahora identifica la transformación que se relaciona con este proceso. Hay distractores.'}
+function ml(i){
+if(done.has(i)){fb3.textContent='Ese hito ya está resuelto. Elige otro.';return}
+picked=i;renderMatch();fb3.textContent='Ahora selecciona la transformación que corresponde. Las seis opciones están mezcladas.';
+}
 function mr(i){
 if(picked===null){fb3.textContent='Primero selecciona un hito.';return}
 if(i===picked){
 if(!done.has(picked)){done.add(picked);score3++;}
-fb3.innerHTML='✅ Relación correcta. No solo importa el acontecimiento, sino el cambio social que produjo.';
+fb3.innerHTML='✅ Relación correcta.';
 }else{
-fb3.textContent='↩️ Esa relación no corresponde. No se revela la respuesta: compara cronología, actores, instituciones y cambios sociales antes de intentar otra.';
+fb3.textContent='↩️ No corresponde. Analiza el proceso histórico y vuelve a intentarlo.';
 }
-picked=null;renderMatch();sc3.textContent=score3+'/6';if(done.size===6)b3.disabled=false
+picked=null;renderMatch();sc3.textContent=score3+'/6';if(done.size===6){fb3.innerHTML='🎉 ¡Completaste las 6 relaciones!';b3.disabled=false}
 }
 const opts=['Aumentar la producción con nuevas máquinas','Mantener el trabajo exactamente como antes','Organizar el trabajo fabril y contratar mano de obra','Exigir mejores condiciones y nuevas formas de organización'];
 let selected=false;
