@@ -27,9 +27,9 @@ textarea{width:100%;min-height:150px;border:2px solid #ddd;border-radius:14px;pa
 
 <section class="screen" id="s1"><h2>🕰️ Sala 1 · Explora los hitos</h2><p class="note">Haz clic en cada pieza para descubrir por qué es importante. Debes explorar las seis.</p><div class="grid" id="events"></div><div class="info" id="info">Selecciona una pieza del museo.</div><div class="actions"><span id="seen">0/6 exploradas</span><button id="b1" disabled onclick="go(2)">Continuar →</button></div></section>
 
-<section class="screen" id="s2"><h2>📜 Sala 2 · Construye la línea del tiempo</h2><p>Haz clic en los acontecimientos en orden cronológico.</p><div class="grid" id="choices"></div><div class="timeline" id="tl">Tu línea aparecerá aquí…</div><div class="info" id="fb2"></div><div class="actions"><span class="score" id="sc2">0 puntos</span><button onclick="resetTL()">Reiniciar</button><button id="b2" disabled onclick="go(3)">Continuar →</button></div></section>
+<section class="screen" id="s2"><h2>📜 Sala 2 · Construye la línea del tiempo</h2><p>Los acontecimientos están mezclados y no muestran sus fechas. Usa pistas históricas, procesos y contexto para reconstruir la secuencia.</p><div class="grid" id="choices"></div><div class="timeline" id="tl">Tu línea aparecerá aquí…</div><div class="info" id="fb2"></div><div class="actions"><span class="score" id="sc2">0 puntos</span><button onclick="resetTL()">Reiniciar</button><button id="b2" disabled onclick="go(3)">Continuar →</button></div></section>
 
-<section class="screen" id="s3"><h2>🔗 Sala 3 · Une historia y transformación</h2><p>Selecciona un hito y luego la transformación social que relacionas con él.</p><div class="match"><div id="left"></div><div id="right"></div></div><div class="info" id="fb3"></div><div class="actions"><span class="score" id="sc3">0/4</span><button id="b3" disabled onclick="go(4)">Continuar →</button></div></section>
+<section class="screen" id="s3"><h2>🔗 Sala 3 · Une historia y transformación</h2><p>Relaciona cada hito con su transformación histórica. Hay distractores y las formulaciones no repiten las palabras del acontecimiento.</p><div class="match"><div id="left"></div><div id="right"></div></div><div class="info" id="fb3"></div><div class="actions"><span class="score" id="sc3">0/4</span><button id="b3" disabled onclick="go(4)">Continuar →</button></div></section>
 
 <section class="screen" id="s4"><h2>🎭 Sala 4 · Piensa como alguien que vive el cambio</h2><p>Imagina que vives durante la Revolución Industrial. Elige una respuesta y lee la explicación. Puedes cambiar de opción.</p><div id="scenario"></div><div class="info" id="fb4"></div><div class="actions"><span class="score" id="sc4">0 puntos</span><button id="b4" disabled onclick="go(5)">Continuar →</button></div></section>
 
@@ -50,15 +50,42 @@ let seen=new Set(), tl=[], score2=0, score3=0;
 function go(n){document.querySelectorAll('.screen').forEach(x=>x.classList.remove('active'));document.getElementById('s'+n).classList.add('active');document.getElementById('bar').style.width=((n+1)/7*100)+'%';scrollTo(0,0)}
 function renderEvents(){events.innerHTML=E.map((e,i)=>`<div class="card" onclick="explore(${i})"><div class="emoji">${e[0]}</div><h3>${e[1]}</h3><small>${e[2]}</small></div>`).join('')}
 function explore(i){seen.add(i);info.innerHTML='<b>'+E[i][0]+' '+E[i][1]+' — '+E[i][2]+'</b><br>'+E[i][3];document.getElementById('seen').textContent=seen.size+'/6 exploradas';document.getElementById('b1').disabled=seen.size<6}
-function renderChoices(){choices.innerHTML=E.map((e,i)=>`<div class="card" onclick="pick(${i})"><div class="emoji">${e[0]}</div><b>${e[1]}</b><br><small>${e[2]}</small></div>`).join('')}
-function pick(i){if(tl.includes(i))return;if(i===tl.length){tl.push(i);score2++;fb2.innerHTML='✅ Correcto. <b>'+E[i][1]+'</b> ocupa esta posición.'}else{fb2.innerHTML='↩️ Esa pieza todavía no corresponde. Intenta otra; el orden correcto comienza por <b>'+E[tl.length][1]+'</b>.'}renderTL();sc2.textContent=score2+' puntos';if(tl.length===6){fb2.innerHTML='🎉 Línea completa: '+tl.map(i=>E[i][1]).join(' → ');b2.disabled=false}}
+function renderChoices(){const order=[3,0,5,2,4,1];choices.innerHTML=order.map(i=>`<div class="card" onclick="pick(${i})"><div class="emoji">${E[i][0]}</div><b>${E[i][1]}</b></div>`).join('')}
+function pick(i){if(tl.includes(i))return;if(i===tl.length){tl.push(i);score2++;fb2.innerHTML='✅ Correcto. Has identificado el siguiente hito de la secuencia.'}else{fb2.innerHTML='↩️ No corresponde a la posición que estás construyendo. Analiza los procesos históricos y vuelve a intentarlo.'}renderTL();sc2.textContent=score2+' puntos';if(tl.length===6){fb2.innerHTML='🎉 Línea completa. Ahora revisa la secuencia y explica mentalmente qué transformaciones se encadenan entre un hito y otro.';b2.disabled=false}}
 function renderTL(){tlEl=document.getElementById('tl');tlEl.innerHTML=tl.length?tl.map((i,n)=>`<span class="tag">${n+1}. ${E[i][1]}</span>`).join(''):'Tu línea aparecerá aquí…'}
 function resetTL(){tl=[];score2=0;renderTL();sc2.textContent='0 puntos';b2.disabled=true;fb2.textContent=''}
-const M=[['Imprenta','Circulación de información'],['Revolución Científica','Nuevas formas de producir conocimiento'],['Revolución Industrial','Transformación del trabajo y urbanización'],['Revolución Francesa','Ciudadanía y cambios políticos']];
+const M=[
+['Imprenta','Mayor velocidad y alcance en la reproducción de textos'],
+['Reforma Protestante','Ruptura de una unidad religiosa y expansión de debates sobre autoridad'],
+['Revolución Científica','Consolidación de métodos de observación, experimentación y matematización'],
+['Ilustración','Difusión de argumentos sobre razón, derechos y límites del poder'],
+['Revolución Industrial','Reorganización de la producción, del tiempo de trabajo y del espacio urbano'],
+['Revolución Francesa','Reconfiguración de la soberanía política y de la idea de ciudadanía']
+];
 let picked=null,done=new Set();
-function renderMatch(){left.innerHTML=M.map((x,i)=>`<div class="card ${picked===i?'picked':''}" onclick="ml(${i})"><b>Hito:</b> ${x[0]}</div>`).join('');right.innerHTML=M.map((x,i)=>`<div class="card" onclick="mr(${i})"><b>Transformación:</b> ${x[1]}</div>`).join('')}
-function ml(i){picked=i;renderMatch();fb3.textContent='Ahora selecciona una transformación.'}
-function mr(i){if(picked===null){fb3.textContent='Primero selecciona un hito.';return}if(M[picked][1]===M[i][1]){if(!done.has(picked)){done.add(picked);score3++;}fb3.innerHTML='✅ Relación correcta: '+M[i][0]+' ↔ '+M[i][1];}else fb3.textContent='↩️ No coincide. Puedes intentarlo de nuevo.';picked=null;renderMatch();sc3.textContent=score3+'/4';if(done.size===4)b3.disabled=false}
+function renderMatch(){
+left.innerHTML=M.map((x,i)=>`<div class="card ${picked===i?'picked':''}" onclick="ml(${i})"><b>Hito:</b> ${x[0]}</div>`).join('');
+const distractors=[
+'Consolidación del sistema feudal y reducción del comercio europeo',
+'Regreso a explicaciones exclusivamente basadas en la tradición',
+'Desaparición de las ciudades como centros de intercambio',
+'Concentración del poder político sin debates sobre representación'
+];
+const all=M.map((x,i)=>({text:x[1],i})).concat(distractors.map(text=>({text,i:-1})));
+const order=[2,7,0,5,8,1,4,9,3,6];
+right.innerHTML=order.map(k=>{const x=all[k];return `<div class="card" onclick="mr(${x.i})"><b>Transformación:</b> ${x.text}</div>`}).join('');
+}
+function ml(i){if(done.has(i)){fb3.textContent='Ese hito ya está resuelto. Elige otro.';return}picked=i;renderMatch();fb3.textContent='Ahora identifica la transformación que se relaciona con este proceso. Hay distractores.'}
+function mr(i){
+if(picked===null){fb3.textContent='Primero selecciona un hito.';return}
+if(i===picked){
+if(!done.has(picked)){done.add(picked);score3++;}
+fb3.innerHTML='✅ Relación correcta. No solo importa el acontecimiento, sino el cambio social que produjo.';
+}else{
+fb3.textContent='↩️ Esa relación no corresponde. No se revela la respuesta: compara cronología, actores, instituciones y cambios sociales antes de intentar otra.';
+}
+picked=null;renderMatch();sc3.textContent=score3+'/6';if(done.size===6)b3.disabled=false
+}
 const opts=['Aumentar la producción con nuevas máquinas','Mantener el trabajo exactamente como antes','Organizar el trabajo fabril y contratar mano de obra','Exigir mejores condiciones y nuevas formas de organización'];
 let selected=false;
 scenario.innerHTML='<p><b>Una fábrica está introduciendo máquinas que cambian la forma de trabajar. ¿Qué situación refleja mejor una transformación social asociada a la industrialización?</b></p>'+opts.map((x,i)=>`<button class="choice" onclick="scenarioPick(${i},this)">${x}</button>`).join('');
