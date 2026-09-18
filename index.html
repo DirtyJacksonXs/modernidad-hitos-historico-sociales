@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Museo Interactivo de la Modernidad</title>
+<style>
+:root{--p:#7b3f8c;--d:#171321;--c:#fff;--m:#eee8f2;--a:#e8d7ee}
+*{box-sizing:border-box}body{margin:0;font-family:system-ui,-apple-system,Segoe UI,sans-serif;background:linear-gradient(135deg,#120e19,#30213a);color:#211b25;min-height:100vh}
+main{max-width:1050px;margin:auto;padding:24px}.app{background:#fff;border-radius:26px;overflow:hidden;box-shadow:0 20px 60px #0008;min-height:700px}
+header{background:linear-gradient(135deg,#7b3f8c,#4b2860);color:white;padding:25px 30px;display:flex;justify-content:space-between;gap:20px;align-items:center}
+h1{margin:0;font-size:clamp(25px,4vw,42px)}h2{font-size:28px;margin:0 0 8px}.sub{opacity:.88}.brand{font-weight:800;letter-spacing:1px;white-space:nowrap}
+.progress{height:7px;background:#eee}.bar{height:100%;background:#7b3f8c;width:16.6%;transition:.3s}
+.screen{display:none;padding:38px}.screen.active{display:block}.hero{text-align:center;padding:45px 15px}.hero .icon{font-size:80px}.hero h2{font-size:clamp(30px,6vw,55px);color:#7b3f8c}
+button{border:0;border-radius:14px;padding:13px 19px;font-size:16px;font-weight:750;cursor:pointer;background:#7b3f8c;color:white;box-shadow:0 5px 14px #7b3f8c33}button:hover{transform:translateY(-1px)}button:disabled{opacity:.45;cursor:not-allowed;transform:none}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:15px}.card{background:#faf8fb;border:2px solid #eee4f1;border-radius:18px;padding:20px;cursor:pointer;transition:.2s}.card:hover,.card.sel{border-color:#7b3f8c;transform:translateY(-3px)}.card .emoji{font-size:40px}.card h3{margin:9px 0 5px}.info{margin-top:20px;padding:18px;background:#f4edf6;border-left:5px solid #7b3f8c;border-radius:12px;min-height:80px}
+.choice{display:block;width:100%;text-align:left;margin:10px 0;background:#f7f4f8;color:#251d29;box-shadow:none}.choice.correct{background:#dff2e4;border:2px solid #389657}.choice.wrong{background:#fde1e1;border:2px solid #bd4747}.choice:disabled{opacity:1}
+.timeline{display:flex;flex-wrap:wrap;gap:10px;min-height:80px;padding:15px;background:#f7f3f8;border-radius:15px}.tag{background:#7b3f8c;color:white;padding:10px 13px;border-radius:12px;font-weight:700}
+.match{display:grid;grid-template-columns:1fr 1fr;gap:15px}.match .card{cursor:pointer}.match .picked{outline:3px solid #7b3f8c}
+textarea{width:100%;min-height:150px;border:2px solid #ddd;border-radius:14px;padding:15px;font:inherit;resize:vertical}.actions{display:flex;justify-content:space-between;gap:10px;margin-top:25px;flex-wrap:wrap}.note{color:#665d69}.score{font-size:22px;font-weight:800;color:#7b3f8c}
+@media(max-width:650px){.screen{padding:24px}.match{grid-template-columns:1fr}header{padding:20px}.brand{display:none}}
+</style></head>
+<body><main><div class="app">
+<header><div><h1>MODERNIDAD</h1><div class="sub">Museo interactivo · hitos histórico-sociales</div></div><div class="brand">UCC</div></header><div class="progress"><div id="bar" class="bar"></div></div>
+
+<section class="screen active" id="s0"><div class="hero"><div class="icon">🏛️</div><h2>¿Cómo llegamos hasta aquí?</h2><p>Recorre seis salas, descubre hitos históricos, toma decisiones y conecta el pasado con el presente.</p><button onclick="go(1)">ENTRAR AL MUSEO →</button></div></section>
+
+<section class="screen" id="s1"><h2>🕰️ Sala 1 · Explora los hitos</h2><p class="note">Haz clic en cada pieza para descubrir por qué es importante. Debes explorar las seis.</p><div class="grid" id="events"></div><div class="info" id="info">Selecciona una pieza del museo.</div><div class="actions"><span id="seen">0/6 exploradas</span><button id="b1" disabled onclick="go(2)">Continuar →</button></div></section>
+
+<section class="screen" id="s2"><h2>📜 Sala 2 · Construye la línea del tiempo</h2><p>Haz clic en los acontecimientos en orden cronológico.</p><div class="grid" id="choices"></div><div class="timeline" id="tl">Tu línea aparecerá aquí…</div><div class="info" id="fb2"></div><div class="actions"><span class="score" id="sc2">0 puntos</span><button onclick="resetTL()">Reiniciar</button><button id="b2" disabled onclick="go(3)">Continuar →</button></div></section>
+
+<section class="screen" id="s3"><h2>🔗 Sala 3 · Une historia y transformación</h2><p>Selecciona un hito y luego la transformación social que relacionas con él.</p><div class="match"><div id="left"></div><div id="right"></div></div><div class="info" id="fb3"></div><div class="actions"><span class="score" id="sc3">0/4</span><button id="b3" disabled onclick="go(4)">Continuar →</button></div></section>
+
+<section class="screen" id="s4"><h2>🎭 Sala 4 · Piensa como alguien que vive el cambio</h2><p>Imagina que vives durante la Revolución Industrial. Elige una respuesta y lee la explicación. Puedes cambiar de opción.</p><div id="scenario"></div><div class="info" id="fb4"></div><div class="actions"><span class="score" id="sc4">0 puntos</span><button id="b4" disabled onclick="go(5)">Continuar →</button></div></section>
+
+<section class="screen" id="s5"><h2>🌎 Sala 5 · Del pasado al presente</h2><p>Selecciona una conexión actual para ver qué proceso histórico ayuda a comprenderla.</p><div class="grid" id="legacy"></div><div class="info" id="info5">Explora las conexiones.</div><div class="actions"><button onclick="go(6)">Ir a la última sala →</button></div></section>
+
+<section class="screen" id="s6"><h2>🧩 Sala 6 · ¿Y si quitamos un hito?</h2><p>Elige qué hito retirarías de la historia para construir un escenario contrafactual.</p><div class="grid" id="counter"></div><div class="info" id="info6">Después escribe: ¿qué cambios podrían producirse y qué consecuencias inesperadas aparecerían?</div><textarea id="reflection" placeholder="Escribe aquí tu reflexión…"></textarea><div class="actions"><button onclick="finish()">Cerrar recorrido</button><button onclick="restart()">↻ Reiniciar museo</button></div><div id="final"></div></section>
+</div></main>
+<script>
+const E=[
+['🖨️','Imprenta','c. 1450','La expansión de la imprenta facilitó la reproducción y circulación de textos a una escala mucho mayor.'],
+['⛪','Reforma Protestante','1517','El movimiento reformador cuestionó prácticas y autoridades religiosas y favoreció nuevas formas de circulación de ideas.'],
+['🔭','Revolución Científica','siglos XVI–XVII','Transformó las formas de estudiar la naturaleza mediante observación, experimentación y nuevas explicaciones matemáticas.'],
+['💡','Ilustración','siglo XVIII','Impulsó debates sobre razón, conocimiento, libertad, derechos y organización política.'],
+['🏭','Revolución Industrial','desde c. 1760','La mecanización y el sistema fabril transformaron producción, trabajo, ciudades y relaciones sociales.'],
+['⚔️','Revolución Francesa','1789','Cambió el orden político francés y difundió debates sobre ciudadanía, soberanía y derechos.']
+];
+let seen=new Set(), tl=[], score2=0, score3=0;
+function go(n){document.querySelectorAll('.screen').forEach(x=>x.classList.remove('active'));document.getElementById('s'+n).classList.add('active');document.getElementById('bar').style.width=((n+1)/7*100)+'%';scrollTo(0,0)}
+function renderEvents(){events.innerHTML=E.map((e,i)=>`<div class="card" onclick="explore(${i})"><div class="emoji">${e[0]}</div><h3>${e[1]}</h3><small>${e[2]}</small></div>`).join('')}
+function explore(i){seen.add(i);info.innerHTML='<b>'+E[i][0]+' '+E[i][1]+' — '+E[i][2]+'</b><br>'+E[i][3];document.getElementById('seen').textContent=seen.size+'/6 exploradas';document.getElementById('b1').disabled=seen.size<6}
+function renderChoices(){choices.innerHTML=E.map((e,i)=>`<div class="card" onclick="pick(${i})"><div class="emoji">${e[0]}</div><b>${e[1]}</b><br><small>${e[2]}</small></div>`).join('')}
+function pick(i){if(tl.includes(i))return;if(i===tl.length){tl.push(i);score2++;fb2.innerHTML='✅ Correcto. <b>'+E[i][1]+'</b> ocupa esta posición.'}else{fb2.innerHTML='↩️ Esa pieza todavía no corresponde. Intenta otra; el orden correcto comienza por <b>'+E[tl.length][1]+'</b>.'}renderTL();sc2.textContent=score2+' puntos';if(tl.length===6){fb2.innerHTML='🎉 Línea completa: '+tl.map(i=>E[i][1]).join(' → ');b2.disabled=false}}
+function renderTL(){tlEl=document.getElementById('tl');tlEl.innerHTML=tl.length?tl.map((i,n)=>`<span class="tag">${n+1}. ${E[i][1]}</span>`).join(''):'Tu línea aparecerá aquí…'}
+function resetTL(){tl=[];score2=0;renderTL();sc2.textContent='0 puntos';b2.disabled=true;fb2.textContent=''}
+const M=[['Imprenta','Circulación de información'],['Revolución Científica','Nuevas formas de producir conocimiento'],['Revolución Industrial','Transformación del trabajo y urbanización'],['Revolución Francesa','Ciudadanía y cambios políticos']];
+let picked=null,done=new Set();
+function renderMatch(){left.innerHTML=M.map((x,i)=>`<div class="card ${picked===i?'picked':''}" onclick="ml(${i})"><b>Hito:</b> ${x[0]}</div>`).join('');right.innerHTML=M.map((x,i)=>`<div class="card" onclick="mr(${i})"><b>Transformación:</b> ${x[1]}</div>`).join('')}
+function ml(i){picked=i;renderMatch();fb3.textContent='Ahora selecciona una transformación.'}
+function mr(i){if(picked===null){fb3.textContent='Primero selecciona un hito.';return}if(M[picked][1]===M[i][1]){if(!done.has(picked)){done.add(picked);score3++;}fb3.innerHTML='✅ Relación correcta: '+M[i][0]+' ↔ '+M[i][1];}else fb3.textContent='↩️ No coincide. Puedes intentarlo de nuevo.';picked=null;renderMatch();sc3.textContent=score3+'/4';if(done.size===4)b3.disabled=false}
+const opts=['Aumentar la producción con nuevas máquinas','Mantener el trabajo exactamente como antes','Organizar el trabajo fabril y contratar mano de obra','Exigir mejores condiciones y nuevas formas de organización'];
+let selected=false;
+scenario.innerHTML='<p><b>Una fábrica está introduciendo máquinas que cambian la forma de trabajar. ¿Qué situación refleja mejor una transformación social asociada a la industrialización?</b></p>'+opts.map((x,i)=>`<button class="choice" onclick="scenarioPick(${i},this)">${x}</button>`).join('');
+function scenarioPick(i,b){document.querySelectorAll('#scenario .choice').forEach(x=>x.classList.remove('correct','wrong'));b.classList.add(i===2?'correct':'wrong');fb4.innerHTML=i===2?'✅ La industrialización modificó la organización del trabajo y favoreció la expansión del sistema fabril.':'↩️ Puedes probar otra opción. La clave está en cómo cambió la organización del trabajo.';if(i===2){selected=true;sc4.textContent='1 punto';b4.disabled=false}}
+const L=[['📱','Redes sociales','La circulación rápida de información permite observar un legado de la transformación histórica de los medios de comunicación.'],['🎓','Educación','La expansión del conocimiento y de la alfabetización se relaciona con procesos históricos de circulación de textos e ideas.'],['🔬','Ciencia y tecnología','La ciencia moderna consolidó nuevas formas de investigar y explicar fenómenos naturales.'],['⚖️','Derechos y ciudadanía','Los debates modernos sobre derechos, soberanía y ciudadanía tuvieron antecedentes en las revoluciones políticas.'],['🌐','Globalización','La expansión de intercambios conecta procesos iniciados por cambios económicos, tecnológicos y políticos de larga duración.'],['🏢','Trabajo industrial','Las formas actuales de producción conservan huellas de la mecanización y organización fabril.']];
+legacy.innerHTML=L.map((x,i)=>`<div class="card" onclick="info5.innerHTML='<b>'+x[0]+' '+x[1]+'</b><br>'+x[2]"><div class="emoji">${x[0]}</div><h3>${x[1]}</h3></div>`).join('');
+counter.innerHTML=E.map((e,i)=>`<div class="card" onclick="info6.innerHTML='<b>Escenario sin '+e[1]+'</b><br>Piensa qué procesos podrían cambiar, cuáles podrían retrasarse y qué efectos no previstos podrían aparecer.'"><div class="emoji">${e[0]}</div><h3>${e[1]}</h3></div>`).join('');
+function finish(){let t=reflection.value.trim();final.innerHTML='<div class="info"><b>🎉 Recorrido terminado.</b><br>'+ (t?'Tu reflexión quedó registrada en esta sesión.':'Puedes volver y completar tu reflexión.')+'<br><small>Este ejercicio abierto no tiene una respuesta única ni se califica automáticamente.</small></div>'}
+function restart(){location.reload()}
+renderEvents();renderChoices();renderTL();renderMatch();
+</script></body></html>
