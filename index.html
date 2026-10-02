@@ -23,15 +23,15 @@ button{border:0;border-radius:14px;padding:13px 19px;font-size:16px;font-weight:
 <body><main><div class="app">
 <header><div><h1>MODERNIDAD</h1><div class="sub">Museo interactivo · hitos histórico-sociales</div></div><div class="brand">UCC</div></header><div class="progress"><div id="bar" class="bar"></div></div>
 
-<section class="screen active" id="s0"><div class="hero"><div class="icon">🏛️</div><h2>¿Cómo llegamos hasta aquí?</h2><p>Recorre una línea de cambios que va desde 1453 hasta 1989. Explora hitos, reconstruye procesos, relaciona transformaciones y conecta el pasado con el presente.</p><button onclick="go(1)">ENTRAR AL MUSEO →</button></div></section>
+<section class="screen active" id="s0"><div class="hero"><div class="icon">🏛️</div><h2>¿Cómo llegamos hasta aquí?</h2><p>Recorre una línea de cambios desde 1492 hasta 1948. Explora hitos, reconstruye procesos, relaciona transformaciones y conecta el pasado con el presente.</p><button onclick="go(1)">ENTRAR AL MUSEO →</button></div></section>
 
-<section class="screen" id="s1"><h2>🕰️ Sala 1 · El museo de los grandes cambios</h2><p class="note">Explora los 10 hitos. Algunos son acontecimientos concretos y otros representan procesos históricos de larga duración.</p><div class="grid" id="events"></div><div class="info" id="info">Selecciona una pieza del museo.</div><div class="actions"><span id="seen">0/10 explorados</span><button id="b1" disabled onclick="go(2)">Continuar →</button></div></section>
+<section class="screen" id="s1"><h2>🕰️ Sala 1 · El museo de los grandes cambios</h2><p class="note">Explora los 6 hitos. Algunos son acontecimientos concretos y otros representan procesos históricos de larga duración.</p><div class="grid" id="events"></div><div class="info" id="info">Selecciona una pieza del museo.</div><div class="actions"><span id="seen">0/6 explorados</span><button id="b1" disabled onclick="go(2)">Continuar →</button></div></section>
 
-<section class="screen" id="s2"><h2>📜 Sala 2 · Construye la línea histórica</h2><p>Las tarjetas están mezcladas y <b>no muestran sus fechas</b>. Reconstruye la secuencia usando contexto histórico. Si fallas, no se te revela la respuesta.</p><div class="grid" id="choices"></div><div class="timeline" id="tl">Tu línea aparecerá aquí…</div><div class="info" id="fb2"></div><div class="actions"><span class="score" id="sc2">0/10</span><button onclick="resetTL()">Reiniciar</button><button id="b2" disabled onclick="go(3)">Continuar →</button></div></section>
+<section class="screen" id="s2"><h2>📜 Sala 2 · Construye la línea histórica</h2><p>Las tarjetas están mezcladas y <b>no muestran sus fechas</b>. Reconstruye la secuencia usando contexto histórico. Si fallas, no se te revela la respuesta.</p><div class="grid" id="choices"></div><div class="timeline" id="tl">Tu línea aparecerá aquí…</div><div class="info" id="fb2"></div><div class="actions"><span class="score" id="sc2">0/6</span><button onclick="resetTL()">Reiniciar</button><button id="b2" disabled onclick="go(3)">Continuar →</button></div></section>
 
 <section class="screen" id="s3"><h2>🔗 Sala 3 · Hito → transformación</h2><p>Relaciona cada hito con su transformación. Hay <b>6 y 6</b>; las transformaciones aparecen mezcladas y no repiten literalmente el nombre del acontecimiento.</p><div class="match"><div id="left"></div><div id="right"></div></div><div class="info" id="fb3">Selecciona un hito y después una transformación.</div><div class="actions"><span class="score" id="sc3">0/6</span><button id="b3" disabled onclick="go(4)">Continuar →</button></div></section>
 
-<section class="screen" id="s4"><h2>🎭 Sala 4 · Piensa como alguien que vive el cambio</h2><p>Elige una de las cuatro situaciones históricas y toma una decisión. Puedes cambiar de situación cuando quieras.</p><div class="grid" id="scenarioTabs"></div><div class="info" id="scenarioBox">Selecciona una situación.</div><div id="scenarioChoices"></div><div class="info" id="fb4"></div><div class="actions"><span class="score" id="sc4">0/4 situaciones resueltas</span><button id="b4" disabled onclick="go(5)">Continuar →</button></div></section>
+<section class="screen" id="s4"><h2>🎭 Sala 4 · Piensa como alguien que vive el cambio</h2><p>Elige una de las cuatro situaciones históricas y toma una decisión. Puedes cambiar de situación cuando quieras.</p><div class="grid" id="scenarioTabs"></div><div class="info" id="scenarioBox">Selecciona una situación.</div><div id="scenarioChoices"></div><div class="info" id="fb4"></div><div class="actions"><span class="score" id="sc4">0/6 situaciones resueltas</span><button id="b4" disabled onclick="go(5)">Continuar →</button></div></section>
 
 <section class="screen" id="s5"><h2>🌎 Sala 5 · Del pasado al presente</h2><p>Explora conexiones entre los procesos estudiados y situaciones del mundo actual.</p><div class="grid" id="legacy"></div><div class="info" id="info5">Haz clic en una conexión.</div><div class="actions"><button onclick="go(6)">Ir a la última sala →</button></div></section>
 
@@ -39,52 +39,50 @@ button{border:0;border-radius:14px;padding:13px 19px;font-size:16px;font-weight:
 </div></main>
 <script>
 const E=[
-['🏰','Caída de Constantinopla','1453','La toma de Constantinopla por los otomanos transformó el equilibrio político y comercial del Mediterráneo y se convirtió en un referente para explicar la transición hacia la Edad Moderna.'],
 ['🌎','Llegada europea a América','1492','La llegada de la expedición de Colón al Caribe abrió un proceso de contactos, conquista, colonización e intercambios que transformó profundamente Europa y América.'],
 ['⛪','Reforma Protestante','1517','El inicio simbólico de la Reforma con las tesis de Lutero cuestionó autoridades y prácticas religiosas y produjo profundas transformaciones políticas y culturales.'],
-['🔭','Revolución Científica','1543–1687','1543 funciona como fecha convencional para representar un proceso más amplio de transformación de las formas de estudiar la naturaleza. En 1637, Descartes publicó el Discurso del método; en 1687, Newton publicó los Principia, hitos que ayudan a comprender la consolidación de la ciencia moderna.'],
+['🔭','Revolución Científica','1543–1687','1543 funciona como fecha convencional para representar un proceso más amplio de transformación de las formas de estudiar la naturaleza. En 1637, Descartes publicó el Discurso del método; en 1687, Newton publicó los Principia.'],
 ['🏭','Revolución Industrial','1760–1840','La mecanización y el sistema fabril transformaron la producción, el trabajo, las ciudades y las relaciones sociales.'],
-['🇺🇸','Independencia de Estados Unidos','1776','La declaración de independencia expresó ideas sobre soberanía, derechos y legitimidad política que formaron parte de los debates del mundo atlántico.'],
 ['⚔️','Revolución Francesa','1789','La revolución transformó el orden político francés y amplió los debates sobre ciudadanía, soberanía, derechos y representación.'],
-['📕','Manifiesto Comunista','1848','El texto de Marx y Engels presentó una crítica de las relaciones sociales y económicas del capitalismo industrial y de los conflictos entre clases.'],
-['⚖️','Declaración Universal de los Derechos Humanos','1948','Adoptada por la Asamblea General de la ONU, estableció un referente internacional para la dignidad y los derechos fundamentales.'],
-['🧱','Caída del Muro de Berlín','1989','La apertura y caída del Muro se convirtió en un símbolo del final de una etapa de división política europea asociada a la Guerra Fría.']
+['⚖️','Declaración Universal de los Derechos Humanos','1948','Adoptada por la Asamblea General de la ONU, estableció un referente internacional para la dignidad y los derechos fundamentales.']
 ];
-let seen=new Set(),tl=[],score2=0,score3=0,scenarioDone=new Set();
+let seen=new Set(),timelineOrder=[],score2=0,score3=0,scenarioDone=new Set();
 
 function go(n){document.querySelectorAll('.screen').forEach(x=>x.classList.remove('active'));document.getElementById('s'+n).classList.add('active');document.getElementById('bar').style.width=((n+1)/7*100)+'%';scrollTo(0,0)}
 function renderEvents(){events.innerHTML=E.map((e,i)=>`<div class="card" onclick="explore(${i})"><div class="emoji">${e[0]}</div><h3>${e[1]}</h3><small>${e[2]}</small></div>`).join('')}
-function explore(i){seen.add(i);info.innerHTML='<b>'+E[i][0]+' '+E[i][1]+' — '+E[i][2]+'</b><br>'+E[i][3];document.getElementById('seen').textContent=seen.size+'/10 explorados';document.getElementById('b1').disabled=seen.size<10}
+function explore(i){seen.add(i);info.innerHTML='<b>'+E[i][0]+' '+E[i][1]+' — '+E[i][2]+'</b><br>'+E[i][3];document.getElementById('seen').textContent=seen.size+'/6 explorados';document.getElementById('b1').disabled=seen.size<6}
 
-const order=[0,1,2,3,4,5,6,7,8,9];
-function renderChoices(){const mixed=[7,2,9,0,6,1,8,4,3,5];choices.innerHTML=mixed.map(i=>`<div class="card" onclick="pick(${i})"><div class="emoji">${E[i][0]}</div><b>${E[i][1]}</b></div>`).join('')}
-function pick(i){if(tl.includes(i))return;if(i===tl.length){tl.push(i);score2++;fb2.innerHTML='✅ Correcto. Has identificado el siguiente punto de la secuencia.'}else{fb2.innerHTML='↩️ Esa pieza no corresponde a la posición que estás construyendo. Analiza contexto, cronología y procesos antes de volver a intentar.'}renderTL();sc2.textContent=score2+'/10';if(tl.length===10){fb2.innerHTML='🎉 Secuencia completada: '+tl.map(i=>E[i][1]).join(' → ');b2.disabled=false}}
-function renderTL(){tl.innerHTML=tl.length?tl.map((i,n)=>`<span class="tag">${n+1}. ${E[i][1]}</span>`).join(''):'Tu línea aparecerá aquí…'}
-function resetTL(){tl=[];score2=0;renderTL();sc2.textContent='0/12';b2.disabled=true;fb2.textContent=''}
+const order=[0,1,2,3,4,5];
+function renderChoices(){const mixed=[4,1,5,0,3,2];choices.innerHTML=mixed.map(i=>`<div class="card" onclick="pick(${i})"><div class="emoji">${E[i][0]}</div><b>${E[i][1]}</b></div>`).join('')}
+function pick(i){if(timelineOrder.includes(i))return;if(i===timelineOrder.length){timelineOrder.push(i);score2++;fb2.innerHTML='✅ Correcto. Has identificado el siguiente punto de la secuencia.'}else{fb2.innerHTML='↩️ Esa pieza no corresponde a la posición que estás construyendo. Analiza contexto, cronología y procesos antes de volver a intentar.'}renderTL();sc2.textContent=score2+'/6';if(timelineOrder.length===6){fb2.innerHTML='🎉 Secuencia completada: '+timelineOrder.map(i=>E[i][1]).join(' → ');b2.disabled=false}}
+function renderTL(){document.getElementById('tl').innerHTML=timelineOrder.length?timelineOrder.map((i,n)=>`<span class="tag">${n+1}. ${E[i][1]}</span>`).join(''):'Tu línea aparecerá aquí…'}
+function resetTL(){timelineOrder=[];score2=0;renderTL();sc2.textContent='0/6';b2.disabled=true;fb2.textContent=''}
 
 const M=[
-['Revolución Científica','Consolidación de nuevas formas de producir conocimiento mediante observación, experimentación y matematización'],
-['Revolución Industrial','Reorganización de la producción, del trabajo y del espacio urbano'],
-['Independencia de Estados Unidos','Nuevos debates sobre soberanía, representación y legitimidad del gobierno'],
-['Revolución Francesa','Transformación de la ciudadanía y del orden político basado en privilegios'],
-['Manifiesto Comunista','Crítica de las relaciones de clase y de las condiciones sociales del capitalismo industrial'],
-['Declaración Universal de los Derechos Humanos','Formulación de un referente internacional para la dignidad y los derechos fundamentales']
+['Llegada europea a América','Contactos, intercambios, conquista y colonización que transformaron sociedades de Europa y América'],
+['Reforma Protestante','Cuestionamiento de autoridades religiosas y nuevas formas de interpretar la fe'],
+['Revolución Científica','Nuevas formas de investigar la naturaleza mediante observación, razonamiento, experimentación y matemáticas'],
+['Revolución Industrial','Mecanización, fábrica, crecimiento urbano y transformación de las relaciones laborales'],
+['Revolución Francesa','Transformación de la ciudadanía, la soberanía y el orden político basado en privilegios'],
+['Declaración Universal de los Derechos Humanos','Referente internacional para la dignidad, las libertades y los derechos fundamentales']
 ];
 let picked=null,done=new Set();
-function renderMatch(){left.innerHTML=M.map((x,i)=>`<div class="card ${picked===i?'picked':''}" onclick="ml(${i})"><b>Hito:</b> ${x[0]}</div>`).join('');const mixed=[3,0,5,2,4,1];right.innerHTML=mixed.map(i=>`<div class="card" onclick="mr(${i})"><b>Transformación:</b> ${M[i][1]}</div>`).join('')}
+function renderMatch(){left.innerHTML=M.map((x,i)=>`<div class="card ${picked===i?'picked':''}" onclick="ml(${i})"><b>Hito:</b> ${x[0]}</div>`).join('');const mixed=[4,0,5,2,1,3];right.innerHTML=mixed.map(i=>`<div class="card" onclick="mr(${i})"><b>Transformación:</b> ${M[i][1]}</div>`).join('')}
 function ml(i){if(done.has(i)){fb3.textContent='Ese hito ya está resuelto. Elige otro.';return}picked=i;renderMatch();fb3.textContent='Ahora selecciona la transformación que corresponde.'}
 function mr(i){if(picked===null){fb3.textContent='Primero selecciona un hito.';return}if(i===picked){done.add(picked);score3++;fb3.innerHTML='✅ Relación correcta.'}else{fb3.textContent='↩️ No corresponde. Analiza el proceso histórico y vuelve a intentarlo.'}picked=null;renderMatch();sc3.textContent=score3+'/6';if(done.size===6){fb3.innerHTML='🎉 ¡Completaste las 6 relaciones!';b3.disabled=false}}
 
 const S=[
-['1517 · Reforma Protestante','Imagina que nuevas ideas religiosas empiezan a circular y cuestionan una autoridad establecida. ¿Qué transformación representa mejor esta situación?',['La discusión sobre autoridad religiosa y nuevas formas de interpretar la fe','El regreso inmediato a una única autoridad religiosa','La desaparición de todos los conflictos políticos europeos'],0],
-['1543–1687 · Ciencia moderna','En una época de nuevos debates sobre la naturaleza, ¿qué cambio caracteriza mejor el proceso científico moderno?',['Aceptar explicaciones solo porque son tradicionales','Combinar observación, razonamiento, experimentación y herramientas matemáticas','Evitar las matemáticas para estudiar fenómenos naturales'],1],
+['1492 · Llegada europea a América','Imagina que eres testigo de los primeros contactos entre sociedades europeas y americanas. ¿Qué interpretación representa mejor lo ocurrido?',['Fue un proceso de contacto que produjo intercambios, conflictos, conquista y transformaciones profundas en ambos espacios','Fue un acontecimiento sin consecuencias duraderas','Solo tuvo consecuencias dentro de Europa'],0],
+['1517 · Reforma Protestante','Nuevas ideas religiosas empiezan a circular y cuestionan una autoridad establecida. ¿Qué transformación representa mejor esta situación?',['La discusión sobre autoridad religiosa y nuevas formas de interpretar la fe','El regreso inmediato a una única autoridad religiosa','La desaparición de todos los conflictos políticos europeos'],0],
+['1543–1687 · Revolución Científica','En una época de nuevos debates sobre la naturaleza, ¿qué cambio caracteriza mejor el proceso científico moderno?',['Aceptar explicaciones solo porque son tradicionales','Combinar observación, razonamiento, experimentación y herramientas matemáticas','Evitar las matemáticas para estudiar fenómenos naturales'],1],
 ['1760–1840 · Revolución Industrial','Una ciudad comienza a recibir trabajadores atraídos por nuevas fábricas. ¿Qué consecuencia encaja mejor con este proceso?',['Transformación del trabajo, crecimiento urbano y nuevas relaciones sociales','Desaparición de la producción mecanizada','Regreso generalizado al trabajo exclusivamente rural'],0],
-['1789–1848 · Revoluciones y cuestión social','Después de cambios políticos e industriales, distintos grupos discuten derechos, ciudadanía y desigualdad. ¿Qué interpretación conecta mejor estos procesos?',['Los cambios políticos y económicos generaron nuevos debates sobre derechos, representación y relaciones de clase','Los procesos fueron exclusivamente religiosos','La industrialización eliminó los conflictos sociales'],0]
+['1789 · Revolución Francesa','En medio de una crisis política, distintos grupos discuten quién debe tener poder y qué derechos deben reconocerse. ¿Qué concepto conecta mejor con este proceso?',['Ciudadanía y soberanía política','Desaparición de toda forma de gobierno','Retorno obligatorio al sistema de privilegios'],0],
+['1948 · Declaración Universal de los Derechos Humanos','Después de la Segunda Guerra Mundial, la comunidad internacional formula un referente común sobre derechos y libertades. ¿Qué representa mejor este hito?',['Un estándar internacional sobre dignidad y derechos fundamentales','Una ley que solo se aplicó a un país','La eliminación automática de todas las desigualdades'],0]
 ];
 function renderScenarios(){scenarioTabs.innerHTML=S.map((x,i)=>`<div class="card" onclick="showScenario(${i})"><b>${x[0]}</b><div class="mini">Explorar situación</div></div>`).join('')}
 let currentS=null;
 function showScenario(i){currentS=i;const s=S[i];scenarioBox.innerHTML='<b>'+s[0]+'</b><br>'+s[1];scenarioChoices.innerHTML=s[2].map((x,j)=>`<button class="choice" onclick="answerScenario(${j},this)">${x}</button>`).join('');fb4.textContent='Elige una respuesta.'}
-function answerScenario(j,b){const s=S[currentS];document.querySelectorAll('#scenarioChoices .choice').forEach(x=>x.classList.remove('correct','wrong'));b.classList.add(j===s[3]?'correct':'wrong');if(j===s[3]){scenarioDone.add(currentS);fb4.innerHTML='✅ Correcto. Esta interpretación conecta el cambio histórico con sus consecuencias sociales.'}else{fb4.textContent='↩️ No es la mejor interpretación. Puedes cambiar tu respuesta.'}sc4.textContent=scenarioDone.size+'/4 situaciones resueltas';b4.disabled=scenarioDone.size<4}
+function answerScenario(j,b){const s=S[currentS];document.querySelectorAll('#scenarioChoices .choice').forEach(x=>x.classList.remove('correct','wrong'));b.classList.add(j===s[3]?'correct':'wrong');if(j===s[3]){scenarioDone.add(currentS);fb4.innerHTML='✅ Correcto. Esta interpretación conecta el cambio histórico con sus consecuencias sociales.'}else{fb4.textContent='↩️ No es la mejor interpretación. Puedes cambiar tu respuesta.'}sc4.textContent=scenarioDone.size+'/6 situaciones resueltas';b4.disabled=scenarioDone.size<6}
 
 const L=[
 ['📱','Información y comunicación','La expansión histórica de medios y tecnologías de comunicación ayuda a comprender por qué hoy las ideas pueden circular a gran velocidad y a escala global.'],
