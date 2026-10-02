@@ -42,9 +42,7 @@ const E=[
 ['🏰','Caída de Constantinopla','1453','La toma de Constantinopla por los otomanos transformó el equilibrio político y comercial del Mediterráneo y se convirtió en un referente para explicar la transición hacia la Edad Moderna.'],
 ['🌎','Llegada europea a América','1492','La llegada de la expedición de Colón al Caribe abrió un proceso de contactos, conquista, colonización e intercambios que transformó profundamente Europa y América.'],
 ['⛪','Reforma Protestante','1517','El inicio simbólico de la Reforma con las tesis de Lutero cuestionó autoridades y prácticas religiosas y produjo profundas transformaciones políticas y culturales.'],
-['🔭','Revolución Científica','1543','1543 funciona como fecha convencional para representar un proceso más amplio de transformación de las formas de estudiar la naturaleza, desarrollado durante los siglos XVI y XVII.'],
-['🧠','Discurso del método','1637','La obra de René Descartes presentó una propuesta metodológica basada en la duda y el razonamiento, vinculada a nuevas formas de abordar el conocimiento.'],
-['🍎','Principios de Newton','1687','La publicación de los Principia de Isaac Newton integró matemáticas y explicación del movimiento y la gravitación, consolidando una etapa decisiva de la ciencia moderna.'],
+['🔭','Revolución Científica','1543–1687','1543 funciona como fecha convencional para representar un proceso más amplio de transformación de las formas de estudiar la naturaleza. En 1637, Descartes publicó el Discurso del método; en 1687, Newton publicó los Principia, hitos que ayudan a comprender la consolidación de la ciencia moderna.'],
 ['🏭','Revolución Industrial','1760–1840','La mecanización y el sistema fabril transformaron la producción, el trabajo, las ciudades y las relaciones sociales.'],
 ['🇺🇸','Independencia de Estados Unidos','1776','La declaración de independencia expresó ideas sobre soberanía, derechos y legitimidad política que formaron parte de los debates del mundo atlántico.'],
 ['⚔️','Revolución Francesa','1789','La revolución transformó el orden político francés y amplió los debates sobre ciudadanía, soberanía, derechos y representación.'],
@@ -56,11 +54,11 @@ let seen=new Set(),tl=[],score2=0,score3=0,scenarioDone=new Set();
 
 function go(n){document.querySelectorAll('.screen').forEach(x=>x.classList.remove('active'));document.getElementById('s'+n).classList.add('active');document.getElementById('bar').style.width=((n+1)/7*100)+'%';scrollTo(0,0)}
 function renderEvents(){events.innerHTML=E.map((e,i)=>`<div class="card" onclick="explore(${i})"><div class="emoji">${e[0]}</div><h3>${e[1]}</h3><small>${e[2]}</small></div>`).join('')}
-function explore(i){seen.add(i);info.innerHTML='<b>'+E[i][0]+' '+E[i][1]+' — '+E[i][2]+'</b><br>'+E[i][3];document.getElementById('seen').textContent=seen.size+'/12 explorados';document.getElementById('b1').disabled=seen.size<12}
+function explore(i){seen.add(i);info.innerHTML='<b>'+E[i][0]+' '+E[i][1]+' — '+E[i][2]+'</b><br>'+E[i][3];document.getElementById('seen').textContent=seen.size+'/10 explorados';document.getElementById('b1').disabled=seen.size<10}
 
-const order=[0,1,2,3,4,5,6,7,8,9,10,11];
-function renderChoices(){const mixed=[8,2,10,0,7,4,11,1,9,5,3,6];choices.innerHTML=mixed.map(i=>`<div class="card" onclick="pick(${i})"><div class="emoji">${E[i][0]}</div><b>${E[i][1]}</b></div>`).join('')}
-function pick(i){if(tl.includes(i))return;if(i===tl.length){tl.push(i);score2++;fb2.innerHTML='✅ Correcto. Has identificado el siguiente punto de la secuencia.'}else{fb2.innerHTML='↩️ Esa pieza no corresponde a la posición que estás construyendo. Analiza contexto, cronología y procesos antes de volver a intentar.'}renderTL();sc2.textContent=score2+'/12';if(tl.length===12){fb2.innerHTML='🎉 Secuencia completada: '+tl.map(i=>E[i][1]).join(' → ');b2.disabled=false}}
+const order=[0,1,2,3,4,5,6,7,8,9];
+function renderChoices(){const mixed=[7,2,9,0,6,1,8,4,3,5];choices.innerHTML=mixed.map(i=>`<div class="card" onclick="pick(${i})"><div class="emoji">${E[i][0]}</div><b>${E[i][1]}</b></div>`).join('')}
+function pick(i){if(tl.includes(i))return;if(i===tl.length){tl.push(i);score2++;fb2.innerHTML='✅ Correcto. Has identificado el siguiente punto de la secuencia.'}else{fb2.innerHTML='↩️ Esa pieza no corresponde a la posición que estás construyendo. Analiza contexto, cronología y procesos antes de volver a intentar.'}renderTL();sc2.textContent=score2+'/10';if(tl.length===10){fb2.innerHTML='🎉 Secuencia completada: '+tl.map(i=>E[i][1]).join(' → ');b2.disabled=false}}
 function renderTL(){tl.innerHTML=tl.length?tl.map((i,n)=>`<span class="tag">${n+1}. ${E[i][1]}</span>`).join(''):'Tu línea aparecerá aquí…'}
 function resetTL(){tl=[];score2=0;renderTL();sc2.textContent='0/12';b2.disabled=true;fb2.textContent=''}
 
