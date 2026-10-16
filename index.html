@@ -2,100 +2,138 @@
 <html lang="es">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Museo Interactivo de la Modernidad</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Historia en movimiento · Ocho hitos</title>
 <style>
-:root{--p:#7b3f8c;--p2:#4b2860;--ink:#211b25;--soft:#f7f2f8;--line:#eadfee;--ok:#dff2e4;--bad:#fde1e1}
-*{box-sizing:border-box}body{margin:0;font-family:system-ui,-apple-system,Segoe UI,sans-serif;background:linear-gradient(135deg,#120e19,#30213a);color:var(--ink);min-height:100vh}
-main{max-width:1100px;margin:auto;padding:24px}.app{background:#fff;border-radius:26px;overflow:hidden;box-shadow:0 20px 60px #0008;min-height:700px}
-header{background:linear-gradient(135deg,var(--p),var(--p2));color:white;padding:25px 30px;display:flex;justify-content:space-between;align-items:center;gap:20px}
-h1{margin:0;font-size:clamp(25px,4vw,42px)}h2{font-size:28px;margin:0 0 8px}.sub{opacity:.9}.brand{font-weight:800;letter-spacing:1px}
-.progress{height:7px;background:#eee}.bar{height:100%;background:var(--p);width:14%;transition:.3s}
-.screen{display:none;padding:38px}.screen.active{display:block}.hero{text-align:center;padding:45px 15px}.hero .icon{font-size:80px}.hero h2{font-size:clamp(30px,6vw,55px);color:var(--p)}
-button{border:0;border-radius:14px;padding:13px 19px;font-size:16px;font-weight:750;cursor:pointer;background:var(--p);color:white;box-shadow:0 5px 14px #7b3f8c33}button:hover{transform:translateY(-1px)}button:disabled{opacity:.45;cursor:not-allowed;transform:none}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:15px}.card{background:#faf8fb;border:2px solid var(--line);border-radius:18px;padding:18px;cursor:pointer;transition:.2s}.card:hover,.card.sel,.card.picked{border-color:var(--p);transform:translateY(-2px)}.card .emoji{font-size:38px}.card h3{margin:8px 0 5px}.info{margin-top:20px;padding:18px;background:#f4edf6;border-left:5px solid var(--p);border-radius:12px;min-height:75px}
-.choice{display:block;width:100%;text-align:left;margin:10px 0;background:#f7f4f8;color:var(--ink);box-shadow:none}.choice.correct{background:var(--ok);border:2px solid #389657}.choice.wrong{background:var(--bad);border:2px solid #bd4747}.choice:disabled{opacity:1}
-.timeline{display:flex;flex-wrap:wrap;gap:10px;min-height:80px;padding:15px;background:var(--soft);border-radius:15px}.tag{background:var(--p);color:white;padding:10px 13px;border-radius:12px;font-weight:700}
-.match{display:grid;grid-template-columns:1fr 1.15fr;gap:15px}.match .card{cursor:pointer}.note{color:#665d69}.score{font-size:20px;font-weight:800;color:var(--p)}textarea{width:100%;min-height:150px;border:2px solid #ddd;border-radius:14px;padding:15px;font:inherit;resize:vertical}.actions{display:flex;justify-content:space-between;gap:10px;margin-top:25px;flex-wrap:wrap}.mini{font-size:13px;color:#6d6470}.pill{display:inline-block;background:#eee3f2;color:var(--p2);padding:5px 9px;border-radius:999px;font-weight:700;margin:3px}
-@media(max-width:700px){.screen{padding:24px}.match{grid-template-columns:1fr}.brand{display:none}}
+:root{--p:#713b83;--p2:#432254;--ink:#211b25;--line:#e6d8eb;--soft:#f8f3fa;--ok:#dff3e5;--bad:#ffe4e4}
+*{box-sizing:border-box}body{margin:0;background:linear-gradient(135deg,#171321,#392348);font-family:system-ui,-apple-system,Segoe UI,sans-serif;color:var(--ink)}
+main{max-width:1120px;margin:auto;padding:22px}.app{background:#fff;border-radius:24px;overflow:hidden;min-height:88vh;box-shadow:0 18px 60px #0007}
+header{background:linear-gradient(120deg,var(--p),var(--p2));color:#fff;padding:24px 30px;display:flex;justify-content:space-between;gap:15px;align-items:center}
+h1{margin:0;font-size:clamp(25px,4vw,40px)}.sub{opacity:.9}h2{font-size:clamp(23px,3vw,31px);margin-top:0}.progress{height:7px;background:#eee}.bar{height:100%;background:#d5f05b;width:0;transition:.25s}
+.screen{display:none;padding:clamp(20px,4vw,38px)}.screen.active{display:block}.hero{text-align:center;padding:50px 12px}.hero .big{font-size:76px}.hero h2{font-size:clamp(32px,5vw,50px);color:var(--p)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(205px,1fr));gap:14px}.card{border:2px solid var(--line);border-radius:17px;background:#fcf9fd;padding:17px;cursor:pointer;transition:.18s}.card:hover,.card.selected{border-color:var(--p);transform:translateY(-2px)}.card.done{background:#f0f8f1;border-color:#98c7a3}.emoji{font-size:36px}.card h3{margin:7px 0}.note{color:#655a6b}.small{font-size:13px;color:#6e6272}
+.info{padding:17px;border-left:5px solid var(--p);border-radius:12px;background:#f4edf7;margin-top:18px;min-height:55px;line-height:1.55}
+button{background:var(--p);color:white;border:0;border-radius:12px;padding:12px 17px;font-size:15px;font-weight:750;cursor:pointer}button:hover{filter:brightness(1.07)}button:disabled{opacity:.4;cursor:not-allowed}.actions{display:flex;gap:10px;justify-content:space-between;align-items:center;flex-wrap:wrap;margin-top:24px}
+.choice{display:block;text-align:left;width:100%;margin:9px 0;background:#f7f2f9;color:#211b25;box-shadow:none;border:2px solid transparent}.choice.correct{background:var(--ok);border-color:#319451}.choice.wrong{background:var(--bad);border-color:#c24b4b}
+.timeline{display:flex;flex-wrap:wrap;gap:8px;background:var(--soft);padding:14px;border-radius:14px;min-height:65px;margin-top:12px}.tag{background:var(--p);color:white;border-radius:10px;padding:9px 11px;font-size:14px}
+.match{display:grid;grid-template-columns:1fr 1.2fr;gap:14px}.score{font-weight:800;color:var(--p)}.finish-note{font-size:15px;line-height:1.6}
+@media(max-width:650px){main{padding:8px}.match{grid-template-columns:1fr}header{padding:20px}.screen{padding:22px}.brand{display:none}}
 </style>
 </head>
 <body><main><div class="app">
-<header><div><h1>MODERNIDAD</h1><div class="sub">Museo interactivo · hitos histórico-sociales</div></div><div class="brand">UCC</div></header><div class="progress"><div id="bar" class="bar"></div></div>
+<header><div><h1>HISTORIA EN MOVIMIENTO</h1><div class="sub">Museo interactivo · ocho hitos en orden cronológico</div></div><strong class="brand">UCC</strong></header>
+<div class="progress"><div class="bar" id="bar"></div></div>
 
-<section class="screen active" id="s0"><div class="hero"><div class="icon">🏛️</div><h2>¿Cómo llegamos hasta aquí?</h2><p>Recorre una línea de cambios desde 1492 hasta 1948. Explora hitos, reconstruye procesos, relaciona transformaciones y conecta el pasado con el presente.</p><button onclick="go(1)">ENTRAR AL MUSEO →</button></div></section>
+<section class="screen active" id="s0"><div class="hero"><div class="big">🏛️</div><h2>Ocho hitos, muchas transformaciones</h2><p>Desde la Peste Negra hasta los atentados del 11 de septiembre de 2001. Explora cada hito, reconstruye la cronología, relaciona impactos y prueba lo que aprendiste.</p><button onclick="go(1)">ENTRAR AL MUSEO →</button></div></section>
 
-<section class="screen" id="s1"><h2>🕰️ Sala 1 · El museo de los grandes cambios</h2><p class="note">Explora los 6 hitos. Algunos son acontecimientos concretos y otros representan procesos históricos de larga duración.</p><div class="grid" id="events"></div><div class="info" id="info">Selecciona una pieza del museo.</div><div class="actions"><span id="seen">0/6 explorados</span><button id="b1" disabled onclick="go(2)">Continuar →</button></div></section>
+<section class="screen" id="s1"><h2>🗺️ Sala 1 · Explora los ocho hitos</h2><p class="note">Selecciona cada tarjeta para leer la información base de la exposición. Explora las ocho para avanzar.</p><div class="grid" id="events"></div><div class="info" id="eventInfo">Elige una tarjeta para descubrir el hito.</div><div class="actions"><span id="seen">0/8 explorados</span><button id="next1" disabled onclick="go(2)">Continuar →</button></div></section>
 
-<section class="screen" id="s2"><h2>📜 Sala 2 · Construye la línea histórica</h2><p>Las tarjetas están mezcladas y <b>no muestran sus fechas</b>. Reconstruye la secuencia usando contexto histórico. Si fallas, no se te revela la respuesta.</p><div class="grid" id="choices"></div><div class="timeline" id="tl">Tu línea aparecerá aquí…</div><div class="info" id="fb2"></div><div class="actions"><span class="score" id="sc2">0/6</span><button onclick="resetTL()">Reiniciar</button><button id="b2" disabled onclick="go(3)">Continuar →</button></div></section>
+<section class="screen" id="s2"><h2>⏳ Sala 2 · Reconstruye la cronología</h2><p>Selecciona los hitos del más antiguo al más reciente. Las tarjetas no muestran fechas. Cuando aciertes, la tarjeta se añadirá a la línea del tiempo; si te equivocas, puedes reintentar.</p><div class="grid" id="timelineOptions"></div><h3>Tu línea del tiempo</h3><div class="timeline" id="timeline"></div><div class="info" id="timelineFeedback">Empieza por el hito más antiguo.</div><div class="actions"><span class="score" id="timelineScore">0/8</span><button onclick="resetTimeline()">Reiniciar línea</button><button id="next2" disabled onclick="go(3)">Continuar →</button></div></section>
 
-<section class="screen" id="s3"><h2>🔗 Sala 3 · Hito → transformación</h2><p>Relaciona cada hito con su transformación. Hay <b>6 y 6</b>; las transformaciones aparecen mezcladas y no repiten literalmente el nombre del acontecimiento.</p><div class="match"><div id="left"></div><div id="right"></div></div><div class="info" id="fb3">Selecciona un hito y después una transformación.</div><div class="actions"><span class="score" id="sc3">0/6</span><button id="b3" disabled onclick="go(4)">Continuar →</button></div></section>
+<section class="screen" id="s3"><h2>🔗 Sala 3 · Une el hito con su impacto</h2><p>Selecciona un hito a la izquierda y luego el impacto que le corresponde. Hay ocho parejas. Si te equivocas, puedes intentarlo otra vez.</p><div class="match"><div id="matchLeft"></div><div id="matchRight"></div></div><div class="info" id="matchFeedback">Selecciona un hito y busca su consecuencia.</div><div class="actions"><span class="score" id="matchScore">0/8</span><button id="next3" disabled onclick="go(4)">Continuar →</button></div></section>
 
-<section class="screen" id="s4"><h2>🎭 Sala 4 · Piensa como alguien que vive el cambio</h2><p>Elige una de las cuatro situaciones históricas y toma una decisión. Puedes cambiar de situación cuando quieras.</p><div class="grid" id="scenarioTabs"></div><div class="info" id="scenarioBox">Selecciona una situación.</div><div id="scenarioChoices"></div><div class="info" id="fb4"></div><div class="actions"><span class="score" id="sc4">0/6 situaciones resueltas</span><button id="b4" disabled onclick="go(5)">Continuar →</button></div></section>
+<section class="screen" id="s4"><h2>🧠 Sala 4 · Comprueba lo que aprendiste</h2><p>Responde las ocho preguntas usando la información base. Puedes cambiar tu respuesta si necesitas volver a intentarlo.</p><div class="grid" id="quizTabs"></div><div class="info" id="quizPrompt">Selecciona una pregunta.</div><div id="quizAnswers"></div><div class="info" id="quizFeedback">Completa todas las preguntas para terminar el reto.</div><div class="actions"><span class="score" id="quizScore">0/8</span><button id="next4" disabled onclick="go(5)">Ver conexiones →</button></div></section>
 
-<section class="screen" id="s5"><h2>🌎 Sala 5 · Del pasado al presente</h2><p>Explora conexiones entre los procesos estudiados y situaciones del mundo actual.</p><div class="grid" id="legacy"></div><div class="info" id="info5">Haz clic en una conexión.</div><div class="actions"><button onclick="go(6)">Ir a la última sala →</button></div></section>
-
-<section class="screen" id="s6"><h2>🧩 Sala 6 · ¿Y si quitamos un hito?</h2><p>Elige un hito y construye un escenario contrafactual: ¿qué procesos podrían cambiar, retrasarse o tomar otro rumbo?</p><div class="grid" id="counter"></div><div class="info" id="info6">Selecciona un hito para comenzar.</div><textarea id="reflection" placeholder="Escribe tu reflexión: ¿qué cambiaría?, ¿qué podría mantenerse?, ¿qué consecuencias inesperadas aparecerían?"></textarea><div class="actions"><button onclick="finish()">Cerrar recorrido</button><button onclick="restart()">↻ Reiniciar museo</button></div><div id="final"></div></section>
+<section class="screen" id="s5"><h2>🌍 Sala 5 · Los hitos y el mundo actual</h2><p>Estas conexiones muestran por qué estudiar la historia ayuda a comprender problemas que siguen importando hoy. Selecciona cada una y luego termina el recorrido.</p><div class="grid" id="connections"></div><div class="info" id="connectionInfo">Selecciona una conexión.</div><div class="actions"><span id="connectionsCount">0/6 conexiones exploradas</span><button id="finishBtn" disabled onclick="finish()">Terminar recorrido ✓</button></div><div id="final"></div></section>
 </div></main>
 <script>
 const E=[
-['🌎','Llegada europea a América','1492','La llegada de la expedición de Colón al Caribe abrió un proceso de contactos, conquista, colonización e intercambios que transformó profundamente Europa y América.'],
-['⛪','Reforma Protestante','1517','El inicio simbólico de la Reforma con las tesis de Lutero cuestionó autoridades y prácticas religiosas y produjo profundas transformaciones políticas y culturales.'],
-['🔭','Revolución Científica','1543–1687','1543 funciona como fecha convencional para representar un proceso más amplio de transformación de las formas de estudiar la naturaleza. En 1637, Descartes publicó el Discurso del método; en 1687, Newton publicó los Principia.'],
-['🏭','Revolución Industrial','1760–1840','La mecanización y el sistema fabril transformaron la producción, el trabajo, las ciudades y las relaciones sociales.'],
-['⚔️','Revolución Francesa','1789','La revolución transformó el orden político francés y amplió los debates sobre ciudadanía, soberanía, derechos y representación.'],
-['⚖️','Declaración Universal de los Derechos Humanos','1948','Adoptada por la Asamblea General de la ONU, estableció un referente internacional para la dignidad y los derechos fundamentales.']
+{icon:'🦠',name:'Peste Negra',date:'1347–1351',year:1347,desc:'La Peste Negra provocó la muerte de millones de personas en Europa. La crisis transformó la economía, las relaciones sociales y debilitó el sistema feudal, contribuyendo al surgimiento de nuevos cambios sociales.'},
+{icon:'🏰',name:'Caída de Constantinopla',date:'1453',year:1453,desc:'En 1453, Constantinopla cayó ante el Imperio otomano. El acontecimiento impulsó la búsqueda de nuevas rutas comerciales y favoreció la llegada de conocimientos bizantinos a Europa.'},
+{icon:'🔭',name:'Revolución Científica',date:'Siglos XVI–XVII · desde c. 1543',year:1543,desc:'La Revolución Científica cambió la manera de comprender la naturaleza mediante la observación, la experimentación y las matemáticas. Fue fundamental para el desarrollo de la ciencia moderna.'},
+{icon:'🧠',name:'Discurso del método',date:'1637',year:1637,desc:'En 1637, René Descartes publicó Discurso del método. La obra destacó la razón y la duda como herramientas para alcanzar conocimientos seguros.'},
+{icon:'🍎',name:'Principios de Newton',date:'1687',year:1687,desc:'En 1687, Isaac Newton publicó Principios matemáticos de la filosofía natural. Allí presentó sus leyes del movimiento y la gravitación universal, transformando la comprensión científica del universo.'},
+{icon:'✊',name:'Revolución Haitiana',date:'1791–1804',year:1791,desc:'En 1791 comenzó la revolución de los esclavizados de Saint-Domingue contra el sistema colonial. En 1804, Haití declaró su independencia y se convirtió en la primera república surgida de una revolución de esclavizados.'},
+{icon:'☢️',name:'Accidente de Chernóbil',date:'1986',year:1986,desc:'En 1986, el reactor número 4 de Chernóbil sufrió una explosión nuclear. El desastre tuvo graves consecuencias ambientales y humanas y se convirtió en un símbolo de los riesgos tecnológicos.'},
+{icon:'🏙️',name:'Atentados del 11 de septiembre',date:'2001',year:2001,desc:'El 11 de septiembre de 2001, Estados Unidos sufrió una serie de atentados terroristas. El acontecimiento transformó las políticas de seguridad y tuvo grandes repercusiones en la política mundial.'}
 ];
-let seen=new Set(),timelineOrder=[],score2=0,score3=0,scenarioDone=new Set();
+const $=id=>document.getElementById(id);
+function go(n){document.querySelectorAll('.screen').forEach(function(s){s.classList.remove('active')});$('s'+n).classList.add('active');$('bar').style.width=(n===0?0:(n/5*100))+'%';window.scrollTo(0,0)}
+let explored=new Set();
+function renderEvents(){
+ $('events').innerHTML=E.map(function(e,i){return '<div class="card event" data-i="'+i+'"><div class="emoji">'+e.icon+'</div><h3>'+e.name+'</h3><small>'+e.date+'</small></div>'}).join('');
+ document.querySelectorAll('.event').forEach(function(c){c.addEventListener('click',function(){let i=Number(c.dataset.i),e=E[i];explored.add(i);c.classList.add('selected');$('eventInfo').innerHTML='<b>'+e.icon+' '+e.name+' · '+e.date+'</b><br>'+e.desc;$('seen').textContent=explored.size+'/8 explorados';$('next1').disabled=explored.size!==8})})
+}
+let timelineBuilt=[];
+const sorted=E.map(function(e,i){return i}).sort(function(a,b){return E[a].year-E[b].year});
+function renderTimelineOptions(){
+ let mixed=[5,2,7,0,4,1,6,3];
+ $('timelineOptions').innerHTML=mixed.filter(function(i){return timelineBuilt.indexOf(i)===-1}).map(function(i){return '<div class="card t-option" data-i="'+i+'"><div class="emoji">'+E[i].icon+'</div><b>'+E[i].name+'</b></div>'}).join('');
+ document.querySelectorAll('.t-option').forEach(function(c){c.addEventListener('click',function(){chooseTimeline(Number(c.dataset.i))})})
+}
+function chooseTimeline(i){
+ if(timelineBuilt.indexOf(i)!==-1)return;
+ let expected=sorted[timelineBuilt.length];
+ if(i===expected){timelineBuilt.push(i);$('timelineFeedback').innerHTML='✅ ¡Correcto! <b>'+E[i].name+'</b> se agregó a tu línea del tiempo.';renderTimelineBuilt();renderTimelineOptions();$('timelineScore').textContent=timelineBuilt.length+'/8';if(timelineBuilt.length===8){$('timelineFeedback').innerHTML='🎉 ¡Cronología completa! Ordenaste los ocho hitos del más antiguo al más reciente.';$('next2').disabled=false}}
+ else{$('timelineFeedback').innerHTML='↩️ Ese hito no va en la siguiente posición. Piensa en las fechas y vuelve a intentarlo.'}
+}
+function renderTimelineBuilt(){$('timeline').innerHTML=timelineBuilt.length?timelineBuilt.map(function(i,n){return '<span class="tag">'+(n+1)+'. '+E[i].name+' · '+E[i].date+'</span>'}).join(''):'<span class="note">Tu línea del tiempo aparecerá aquí…</span>'}
+function resetTimeline(){timelineBuilt=[];$('timelineScore').textContent='0/8';$('timelineFeedback').textContent='Empieza por el hito más antiguo.';$('next2').disabled=true;renderTimelineBuilt();renderTimelineOptions()}
 
-function go(n){document.querySelectorAll('.screen').forEach(x=>x.classList.remove('active'));document.getElementById('s'+n).classList.add('active');document.getElementById('bar').style.width=((n+1)/7*100)+'%';scrollTo(0,0)}
-function renderEvents(){events.innerHTML=E.map((e,i)=>`<div class="card" onclick="explore(${i})"><div class="emoji">${e[0]}</div><h3>${e[1]}</h3><small>${e[2]}</small></div>`).join('')}
-function explore(i){seen.add(i);info.innerHTML='<b>'+E[i][0]+' '+E[i][1]+' — '+E[i][2]+'</b><br>'+E[i][3];document.getElementById('seen').textContent=seen.size+'/6 explorados';document.getElementById('b1').disabled=seen.size<6}
-
-const order=[0,1,2,3,4,5];
-function renderChoices(){const mixed=[4,1,5,0,3,2];choices.innerHTML=mixed.map(i=>`<div class="card" onclick="pick(${i})"><div class="emoji">${E[i][0]}</div><b>${E[i][1]}</b></div>`).join('')}
-function pick(i){if(timelineOrder.includes(i))return;if(i===timelineOrder.length){timelineOrder.push(i);score2++;fb2.innerHTML='✅ Correcto. Has identificado el siguiente punto de la secuencia.'}else{fb2.innerHTML='↩️ Esa pieza no corresponde a la posición que estás construyendo. Analiza contexto, cronología y procesos antes de volver a intentar.'}renderTL();sc2.textContent=score2+'/6';if(timelineOrder.length===6){fb2.innerHTML='🎉 Secuencia completada: '+timelineOrder.map(i=>E[i][1]).join(' → ');b2.disabled=false}}
-function renderTL(){document.getElementById('tl').innerHTML=timelineOrder.length?timelineOrder.map((i,n)=>`<span class="tag">${n+1}. ${E[i][1]}</span>`).join(''):'Tu línea aparecerá aquí…'}
-function resetTL(){timelineOrder=[];score2=0;renderTL();sc2.textContent='0/6';b2.disabled=true;fb2.textContent=''}
-
-const M=[
-['Llegada europea a América','Contactos, intercambios, conquista y colonización que transformaron sociedades de Europa y América'],
-['Reforma Protestante','Cuestionamiento de autoridades religiosas y nuevas formas de interpretar la fe'],
-['Revolución Científica','Nuevas formas de investigar la naturaleza mediante observación, razonamiento, experimentación y matemáticas'],
-['Revolución Industrial','Mecanización, fábrica, crecimiento urbano y transformación de las relaciones laborales'],
-['Revolución Francesa','Transformación de la ciudadanía, la soberanía y el orden político basado en privilegios'],
-['Declaración Universal de los Derechos Humanos','Referente internacional para la dignidad, las libertades y los derechos fundamentales']
+const impacts=[
+'La enorme mortalidad alteró el trabajo y la economía, transformó las relaciones sociales y debilitó el sistema feudal.',
+'El cambio de poder de 1453 impulsó la búsqueda de rutas comerciales y facilitó la llegada de conocimientos bizantinos a Europa.',
+'La observación, la experimentación y las matemáticas cambiaron la forma de explicar la naturaleza y ayudaron a desarrollar la ciencia moderna.',
+'La razón y la duda fueron destacadas como herramientas para buscar conocimientos seguros.',
+'Las leyes del movimiento y la gravitación universal transformaron la comprensión científica del universo.',
+'La rebelión contra la esclavitud colonial llevó a la independencia de Haití en 1804.',
+'El desastre produjo graves consecuencias ambientales y humanas y simbolizó los riesgos tecnológicos.',
+'Los atentados cambiaron políticas de seguridad y tuvieron grandes repercusiones en la política mundial.'
 ];
-let picked=null,done=new Set();
-function renderMatch(){left.innerHTML=M.map((x,i)=>`<div class="card ${picked===i?'picked':''}" onclick="ml(${i})"><b>Hito:</b> ${x[0]}</div>`).join('');const mixed=[4,0,5,2,1,3];right.innerHTML=mixed.map(i=>`<div class="card" onclick="mr(${i})"><b>Transformación:</b> ${M[i][1]}</div>`).join('')}
-function ml(i){if(done.has(i)){fb3.textContent='Ese hito ya está resuelto. Elige otro.';return}picked=i;renderMatch();fb3.textContent='Ahora selecciona la transformación que corresponde.'}
-function mr(i){if(picked===null){fb3.textContent='Primero selecciona un hito.';return}if(i===picked){done.add(picked);score3++;fb3.innerHTML='✅ Relación correcta.'}else{fb3.textContent='↩️ No corresponde. Analiza el proceso histórico y vuelve a intentarlo.'}picked=null;renderMatch();sc3.textContent=score3+'/6';if(done.size===6){fb3.innerHTML='🎉 ¡Completaste las 6 relaciones!';b3.disabled=false}}
-
-const S=[
-['1492 · Llegada europea a América','Imagina que eres testigo de los primeros contactos entre sociedades europeas y americanas. ¿Qué interpretación representa mejor lo ocurrido?',['Fue un proceso de contacto que produjo intercambios, conflictos, conquista y transformaciones profundas en ambos espacios','Fue un acontecimiento sin consecuencias duraderas','Solo tuvo consecuencias dentro de Europa'],0],
-['1517 · Reforma Protestante','Nuevas ideas religiosas empiezan a circular y cuestionan una autoridad establecida. ¿Qué transformación representa mejor esta situación?',['La discusión sobre autoridad religiosa y nuevas formas de interpretar la fe','El regreso inmediato a una única autoridad religiosa','La desaparición de todos los conflictos políticos europeos'],0],
-['1543–1687 · Revolución Científica','En una época de nuevos debates sobre la naturaleza, ¿qué cambio caracteriza mejor el proceso científico moderno?',['Aceptar explicaciones solo porque son tradicionales','Combinar observación, razonamiento, experimentación y herramientas matemáticas','Evitar las matemáticas para estudiar fenómenos naturales'],1],
-['1760–1840 · Revolución Industrial','Una ciudad comienza a recibir trabajadores atraídos por nuevas fábricas. ¿Qué consecuencia encaja mejor con este proceso?',['Transformación del trabajo, crecimiento urbano y nuevas relaciones sociales','Desaparición de la producción mecanizada','Regreso generalizado al trabajo exclusivamente rural'],0],
-['1789 · Revolución Francesa','En medio de una crisis política, distintos grupos discuten quién debe tener poder y qué derechos deben reconocerse. ¿Qué concepto conecta mejor con este proceso?',['Ciudadanía y soberanía política','Desaparición de toda forma de gobierno','Retorno obligatorio al sistema de privilegios'],0],
-['1948 · Declaración Universal de los Derechos Humanos','Después de la Segunda Guerra Mundial, la comunidad internacional formula un referente común sobre derechos y libertades. ¿Qué representa mejor este hito?',['Un estándar internacional sobre dignidad y derechos fundamentales','Una ley que solo se aplicó a un país','La eliminación automática de todas las desigualdades'],0]
+let selectedMatch=null,matched=new Set();
+function renderMatch(){
+ $('matchLeft').innerHTML=E.map(function(e,i){return '<div class="card '+(selectedMatch===i?'selected':'')+(matched.has(i)?' done':'')+'" data-i="'+i+'"><b>Hito:</b> '+e.name+(matched.has(i)?' ✓':'')+'</div>'}).join('');
+ let mix=[5,2,7,0,4,1,6,3];
+ $('matchRight').innerHTML=mix.filter(function(i){return !matched.has(i)}).map(function(i){return '<div class="card m-option" data-i="'+i+'"><b>Impacto:</b> '+impacts[i]+'</div>'}).join('');
+ document.querySelectorAll('#matchLeft .card').forEach(function(c){c.addEventListener('click',function(){let i=Number(c.dataset.i);if(!matched.has(i)){selectedMatch=i;renderMatch()}})});
+ document.querySelectorAll('.m-option').forEach(function(c){c.addEventListener('click',function(){matchAnswer(Number(c.dataset.i))})})
+}
+function matchAnswer(i){
+ if(selectedMatch===null){$('matchFeedback').textContent='Primero selecciona un hito de la columna izquierda.';return}
+ if(i===selectedMatch){matched.add(i);$('matchFeedback').innerHTML='✅ ¡Pareja correcta! <b>'+E[i].name+'</b> está relacionado con ese impacto.';selectedMatch=null}
+ else{$('matchFeedback').textContent='↩️ Ese impacto corresponde a otro hito. El mismo hito sigue seleccionado para que puedas probar otra vez.'}
+ $('matchScore').textContent=matched.size+'/8';renderMatch();if(matched.size===8){$('matchFeedback').textContent='🎉 ¡Completaste las ocho parejas!';$('next3').disabled=false}
+}
+const Q=[
+{title:'Peste Negra',q:'¿Qué transformación se relaciona con la Peste Negra?',a:['Transformó la economía y las relaciones sociales y debilitó el sistema feudal.','Provocó la independencia de Haití.','Cambió las políticas de seguridad de Estados Unidos.'],c:0},
+{title:'Constantinopla',q:'¿Qué consecuencia se vincula con la caída de Constantinopla en 1453?',a:['La publicación de las leyes del movimiento.','La búsqueda de nuevas rutas comerciales y la llegada de conocimientos bizantinos a Europa.','La explosión del reactor número 4.'],c:1},
+{title:'Revolución Científica',q:'¿Qué métodos ayudaron a cambiar la comprensión de la naturaleza?',a:['Solo la tradición, sin observación.','Únicamente la opinión de los gobernantes.','La observación, la experimentación y las matemáticas.'],c:2},
+{title:'Descartes',q:'¿Qué destacó René Descartes en Discurso del método, publicado en 1637?',a:['La razón y la duda como herramientas para alcanzar conocimientos seguros.','Las políticas de seguridad posteriores a 2001.','La independencia de Saint-Domingue.'],c:0},
+{title:'Newton',q:'¿Qué presentó Newton en Principios matemáticos de la filosofía natural, publicado en 1687?',a:['La teoría del debilitamiento del sistema feudal.','Las leyes del movimiento y la gravitación universal.','Las rutas comerciales después de 1453.'],c:1},
+{title:'Revolución Haitiana',q:'¿Qué ocurrió en 1804 como resultado de la Revolución Haitiana?',a:['Chernóbil sufrió una explosión nuclear.','Haití declaró su independencia.','Se publicó Discurso del método.'],c:1},
+{title:'Chernóbil',q:'¿Por qué se recuerda el accidente de Chernóbil de 1986?',a:['Por sus consecuencias humanas y ambientales y como símbolo de riesgos tecnológicos.','Por haber debilitado el feudalismo en Europa medieval.','Por impulsar la caída de Constantinopla.'],c:0},
+{title:'11 de septiembre',q:'¿Qué repercusión tuvieron los atentados del 11 de septiembre de 2001?',a:['La creación de las leyes de Newton.','El inicio de la Peste Negra.','Transformaciones de las políticas de seguridad y repercusiones en la política mundial.'],c:2}
 ];
-function renderScenarios(){scenarioTabs.innerHTML=S.map((x,i)=>`<div class="card" onclick="showScenario(${i})"><b>${x[0]}</b><div class="mini">Explorar situación</div></div>`).join('')}
-let currentS=null;
-function showScenario(i){currentS=i;const s=S[i];scenarioBox.innerHTML='<b>'+s[0]+'</b><br>'+s[1];scenarioChoices.innerHTML=s[2].map((x,j)=>`<button class="choice" onclick="answerScenario(${j},this)">${x}</button>`).join('');fb4.textContent='Elige una respuesta.'}
-function answerScenario(j,b){const s=S[currentS];document.querySelectorAll('#scenarioChoices .choice').forEach(x=>x.classList.remove('correct','wrong'));b.classList.add(j===s[3]?'correct':'wrong');if(j===s[3]){scenarioDone.add(currentS);fb4.innerHTML='✅ Correcto. Esta interpretación conecta el cambio histórico con sus consecuencias sociales.'}else{fb4.textContent='↩️ No es la mejor interpretación. Puedes cambiar tu respuesta.'}sc4.textContent=scenarioDone.size+'/6 situaciones resueltas';b4.disabled=scenarioDone.size<6}
-
-const L=[
-['📱','Información y comunicación','La expansión histórica de medios y tecnologías de comunicación ayuda a comprender por qué hoy las ideas pueden circular a gran velocidad y a escala global.'],
-['🎓','Educación y conocimiento','La transformación de las formas de producir y difundir conocimiento ayuda a contextualizar la educación moderna y la circulación de textos e ideas.'],
-['🔬','Ciencia y tecnología','Los cambios científicos de los siglos XVI–XVII forman parte de la historia de las formas actuales de investigar, medir y explicar fenómenos.'],
-['⚖️','Ciudadanía y derechos','Los debates modernos sobre soberanía, ciudadanía y derechos se relacionan con procesos políticos que siguen presentes en las democracias contemporáneas.'],
-['🏢','Trabajo y ciudad','La industrialización dejó transformaciones duraderas en la organización del trabajo, la producción y la vida urbana.'],
-['🌐','Mundo interconectado','Los intercambios y procesos políticos, económicos y tecnológicos de larga duración contribuyeron a formar un mundo cada vez más interdependiente.']
+let quizSolved=new Set(),activeQuestion=null;
+function renderQuiz(){
+ $('quizTabs').innerHTML=Q.map(function(q,i){return '<div class="card q-tab '+(quizSolved.has(i)?'done':'')+'" data-i="'+i+'"><b>'+(i+1)+'. '+q.title+'</b>'+(quizSolved.has(i)?'<div class="small">Completada ✓</div>':'<div class="small">Abrir pregunta</div>')+'</div>'}).join('');
+ document.querySelectorAll('.q-tab').forEach(function(c){c.addEventListener('click',function(){showQuestion(Number(c.dataset.i))})})
+}
+function showQuestion(i){
+ activeQuestion=i;let q=Q[i];$('quizPrompt').innerHTML='<b>'+q.title+'</b><br>'+q.q;
+ $('quizAnswers').innerHTML=q.a.map(function(a,j){return '<button class="choice" data-i="'+j+'">'+a+'</button>'}).join('');
+ $('quizFeedback').textContent=quizSolved.has(i)?'✅ Ya resolviste esta pregunta. Puedes revisar las opciones.':'Selecciona tu respuesta.';
+ document.querySelectorAll('#quizAnswers .choice').forEach(function(b){b.addEventListener('click',function(){answerQuestion(Number(b.dataset.i),b)})})
+}
+function answerQuestion(j,b){
+ let q=Q[activeQuestion];document.querySelectorAll('#quizAnswers .choice').forEach(function(x){x.classList.remove('correct','wrong')});
+ if(j===q.c){quizSolved.add(activeQuestion);b.classList.add('correct');$('quizFeedback').textContent='✅ ¡Correcto! Has identificado la información clave.';renderQuiz()}
+ else{b.classList.add('wrong');$('quizFeedback').textContent='↩️ Esa no es la respuesta correcta según la información de la exposición. Intenta otra vez.'}
+ $('quizScore').textContent=quizSolved.size+'/8';if(quizSolved.size===8){$('quizFeedback').textContent='🎉 ¡Las ocho preguntas están resueltas!';$('next4').disabled=false}
+}
+const C=[
+['🦠','Salud y sociedad','La Peste Negra muestra que las crisis sanitarias también pueden transformar el trabajo, la economía y las relaciones sociales.'],
+['🌍','Comercio y circulación del conocimiento','La caída de Constantinopla ayuda a explorar cómo los cambios políticos pueden influir en las rutas comerciales y en la circulación de ideas.'],
+['🔬','Ciencia y pensamiento crítico','La Revolución Científica, Descartes y Newton ayudan a explicar por qué la observación, la razón y las matemáticas son importantes en la producción de conocimiento.'],
+['✊','Esclavitud y libertad','La Revolución Haitiana conecta con debates actuales sobre igualdad, derechos humanos, racismo y libertad.'],
+['☢️','Tecnología y responsabilidad','Chernóbil invita a pensar en la gestión de riesgos tecnológicos, la protección de las personas y el ambiente.'],
+['🛡️','Seguridad y política mundial','El 11 de septiembre permite analizar cómo un acontecimiento puede transformar políticas de seguridad y relaciones internacionales.']
 ];
-function renderLegacy(){legacy.innerHTML=L.map((x,i)=>`<div class="card legacy-card" data-i="${i}"><div class="emoji">${x[0]}</div><h3>${x[1]}</h3></div>`).join('');document.querySelectorAll('.legacy-card').forEach(c=>c.addEventListener('click',()=>{const x=L[+c.dataset.i];info5.innerHTML='<b>'+x[0]+' '+x[1]+'</b><br>'+x[2];c.classList.add('sel')}))}
-
-function renderCounter(){counter.innerHTML=E.map((e,i)=>`<div class="card counter-card" data-i="${i}"><div class="emoji">${e[0]}</div><h3>${e[1]}</h3><small>${e[2]}</small></div>`).join('');document.querySelectorAll('.counter-card').forEach(c=>c.addEventListener('click',()=>{const e=E[+c.dataset.i];info6.innerHTML='<b>Escenario sin '+e[1]+'</b><br>Piensa qué procesos anteriores podrían tomar otro rumbo, qué transformaciones posteriores podrían verse afectadas y qué consecuencias inesperadas podrían aparecer.';c.classList.add('sel')}))}
-function finish(){const t=reflection.value.trim();final.innerHTML='<div class="info"><b>🎉 Recorrido terminado.</b><br>'+(t?'Tu reflexión quedó registrada en esta sesión.':'Puedes completar la reflexión antes de cerrar.')+'<br><small>La reflexión abierta no tiene una única respuesta correcta y no se califica automáticamente.</small></div>'}
-function restart(){location.reload()}
-renderEvents();renderChoices();renderTL();renderMatch();renderScenarios();renderLegacy();renderCounter();
+let connectionsSeen=new Set();
+function renderConnections(){
+ $('connections').innerHTML=C.map(function(x,i){return '<div class="card conn" data-i="'+i+'"><div class="emoji">'+x[0]+'</div><h3>'+x[1]+'</h3></div>'}).join('');
+ document.querySelectorAll('.conn').forEach(function(c){c.addEventListener('click',function(){let i=Number(c.dataset.i),x=C[i];connectionsSeen.add(i);c.classList.add('selected');$('connectionInfo').innerHTML='<b>'+x[0]+' '+x[1]+'</b><br>'+x[2];$('connectionsCount').textContent=connectionsSeen.size+'/6 conexiones exploradas';$('finishBtn').disabled=connectionsSeen.size!==6})})
+}
+function finish(){$('final').innerHTML='<div class="info finish-note"><b>🎉 ¡Recorrido completado!</b><br>Exploraste los ocho hitos en orden cronológico, reconstruiste la línea del tiempo, relacionaste sus impactos y respondiste las preguntas. ¡Buen trabajo!</div>';$('finishBtn').disabled=true;$('final').scrollIntoView({behavior:'smooth',block:'nearest'})}
+renderEvents();renderTimelineOptions();renderTimelineBuilt();renderMatch();renderQuiz();renderConnections();
 </script></body></html>
